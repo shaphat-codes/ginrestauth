@@ -21,11 +21,15 @@ type User struct {
 }
 
 func (user *User) BeforeSave(*gorm.DB) error {
-	passwordHash, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+	if user.ID == 0 {
+
+		passwordHash, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+
 	if err != nil {
 		return err
 	}
 	user.Password = string(passwordHash)
+}
 	return nil
 }
 
@@ -48,7 +52,7 @@ func FindUserByEmail(email string) (User, error) {
 
 func (user *User) ValidatePassword(password string) error {
 	fmt.Println("plain password", password)
-	fmt.Println("stored hashed pasword", user.Password)
+	//fmt.Println("stored hashed pasword", user.Password)
 	//hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	//if err != nil {
 	//	return err
