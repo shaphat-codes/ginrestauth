@@ -38,7 +38,7 @@ func ValidateJWT(context *gin.Context) error {
 	return errors.New("invalid token provided")
 }
 
-/*	func CurrentUser(context *gin.Context) (models.User, error) {
+func CurrentUser(context *gin.Context) (models.User, error) {
 	err := ValidateJWT(context)
 	if err != nil {
 		return models.User{}, err
@@ -53,7 +53,7 @@ func ValidateJWT(context *gin.Context) error {
 	}
 	return user, nil
 }
-*/
+
 func getToken(context *gin.Context) (*jwt.Token, error) {
 	tokenString := getTokenFromRequest(context)
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
